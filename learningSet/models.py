@@ -8,6 +8,11 @@ class CardsSet(models.Model):
 	educational_material = models.CharField(max_length = 10000)
 	created_at = models.DateTimeField(auto_now_add=True)
 	user = models.ManyToManyField(User)
+
+	class Meta:
+		indexes = [
+    		models.Index(fields=['name','created_at',]),
+		]
    
 
 class Card(models.Model):
