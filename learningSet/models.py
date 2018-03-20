@@ -1,13 +1,26 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation
 import os
+
+
+class Comment(models.Model):
+	text = models.CharField(max_length=255)
+	created_at = models.DateTimeField(auto_now_add=True)
+	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+	object_id = models.PositiveIntegerField()
+	content_object = GenericForeignKey('content_type', 'object_id')
+
 
 class CardsSet(models.Model):
 	name = models.CharField(max_length=255)
 	educational_material = models.CharField(max_length = 10000)
 	created_at = models.DateTimeField(auto_now_add=True)
 	user = models.ManyToManyField(User)
+	comments = GenericRelation(Comment)
 
 	class Meta:
 		indexes = [
@@ -20,11 +33,8 @@ class Card(models.Model):
     answer = models.CharField(max_length=2000)
     created_at = models.DateTimeField(auto_now_add=True)
     cardsSet = models. ManyToManyField(CardsSet)
+    comments = GenericRelation(Comment)
 
-
-class Comment(models.Model):
-	text = models.CharField(max_length=255)
-	created_at = models.DateTimeField(auto_now_add=True)
 
 
 def get_image_path(instance, filename):
@@ -44,6 +54,11 @@ class Favorite(models.Model):
 class TestGroup(models.Model):
 	parentCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.parentCardsSet+')
 	childCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.childCardsSet+')
+
+class Friend(object):
+	fromUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="Friend.fromUser+")
+	toUser = models.ForeignKey(User,on_delete=models.SET_NULL, related_name="Friend.toUser+")
+		
 
 
   
