@@ -31,7 +31,6 @@ class Card(models.Model):
     cardsSet = models. ManyToManyField(CardsSet)
     comments = GenericRelation(Comment)
 
-	#delete user profile
 
 # Many to many tables 
 
@@ -43,12 +42,6 @@ class TestGroup(models.Model):
 	parentCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.parentCardsSet+')
 	childCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.childCardsSet+')
 
-# class Friend(object):#through
-#  	fromUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="Friend.fromUser+")
-# 	toUser = models.ForeignKey(User,on_delete=models.SET_NULL, related_name="Friend.toUser+")
-
-def get_image_path(instance, filename):
-	return os.path.join('photos', str(instance.id), filename)
 		
 
 
