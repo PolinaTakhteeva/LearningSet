@@ -8,56 +8,47 @@ import os
 
 
 class Comment(models.Model):
-	text = models.CharField(max_length=255)
+	text = models.TextField()
+	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL);
 	created_at = models.DateTimeField(auto_now_add=True)
-	content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+	content_type = models.ForeignKey(ContentType, null=True, on_delete=models.SET_NULL)
 	object_id = models.PositiveIntegerField()
 	content_object = GenericForeignKey('content_type', 'object_id')
 
 
-class CardsSet(models.Model):
-	name = models.CharField(max_length=255)
-	educational_material = models.CharField(max_length = 10000)
-	created_at = models.DateTimeField(auto_now_add=True)
-	user = models.ManyToManyField(User)
+class CardsSet(models.Model): #group with rights
+	name = models.CharField(max_length=255, db_index=True) #unic control  by data base
+	educational_material = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+	creator = models.ForeignKey(User, on_delete=models.CASCADE);
 	comments = GenericRelation(Comment)
-
-	class Meta:
-		indexes = [
-    		models.Index(fields=['name','created_at',]),
-		]
    
 
 class Card(models.Model):
-    question = models.CharField(max_length=1000)
-    answer = models.CharField(max_length=2000)
+    question = models.TextField()
+    answer = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     cardsSet = models. ManyToManyField(CardsSet)
     comments = GenericRelation(Comment)
 
-
-
-def get_image_path(instance, filename):
-	return os.path.join('photos', str(instance.id), filename)
-		
-class UserProfile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	profile_image = models.ImageField(upload_to=get_image_path, blank=True, null=True)
-	specialty = models.CharField(max_length=255)
+	#delete user profile
 
 # Many to many tables 
 
-class Favorite(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE);
-	CardsSet = models.OneToOneField(CardsSet, on_delete=models.CASCADE)
+class Favorite(models.Model): #fk
+	user = models.ForeignKey(User, on_delete=models.CASCADE);
+	CardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE)
 
 class TestGroup(models.Model):
 	parentCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.parentCardsSet+')
 	childCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.childCardsSet+')
 
-class Friend(object):
-	fromUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="Friend.fromUser+")
-	toUser = models.ForeignKey(User,on_delete=models.SET_NULL, related_name="Friend.toUser+")
+# class Friend(object):#through
+#  	fromUser = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="Friend.fromUser+")
+# 	toUser = models.ForeignKey(User,on_delete=models.SET_NULL, related_name="Friend.toUser+")
+
+def get_image_path(instance, filename):
+	return os.path.join('photos', str(instance.id), filename)
 		
 
 
