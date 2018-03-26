@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
-import os
 
 
 class Comment(models.Model):
@@ -30,34 +29,35 @@ class CardsSet(models.Model): #group with rights
 
 	class Meta:
 		ordering = ('created_at',)
-		verbose_name = 'Набор тестовых карт'
-		verbose_name_plural = 'Наборы тестовых карт'
+		verbose_name = 'Набор флеш-карт'
+		verbose_name_plural = 'Наборы флеш-карт'
    
 
 class Card(models.Model):
     question = models.TextField()
     answer = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    cardsSet = models. ManyToManyField(CardsSet)
+    cardsSet = models.ForeignKey(CardsSet, on_delete=models.SET_NULL, null=True)
     comments = GenericRelation(Comment)
 
     class Meta:
         verbose_name = 'Флеш-карта'
         verbose_name_plural = 'Флеш-карты'
 
-# Many to many tables 
 
+# Many to many tables 
 class Favorite(models.Model): #fk
 	user = models.ForeignKey(User, on_delete=models.CASCADE);
 	CardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE)
-	
+
 	class Meta:
 		verbose_name = 'Избранное'
-		verbose_name_plural = 'Избранное'
+		verbose_name_plural = 'Избранные наборы флеш-карт'
 
 class TestGroup(models.Model):
 	parentCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.parentCardsSet+')
 	childCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.childCardsSet+')
+			
 
 		
 
