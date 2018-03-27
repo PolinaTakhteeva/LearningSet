@@ -1,0 +1,17 @@
+{% extends 'learningSet/cardsSet_base.html' %}
+{% block content %}
+		<div>
+			<h1>{{set.name}}</h1>
+			<div>{{set.description}}</div>
+			<br>
+			<div>{{set.educational_material}}</div>
+			<br>
+			<h2>Test qustions:</h2>
+			{% for card in cards %}
+				<div>
+				<a href="{% url 'card_detail' card.id %}">{{card.question}}</a>
+				</div>
+				<br>
+			{% endfor %}
+		</div>
+{% endblock %}

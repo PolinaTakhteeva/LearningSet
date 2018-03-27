@@ -13,11 +13,12 @@ def users_list(request):
 def user_detail(request, user_id):
 	try:
 		user = User.objects.get(id=user_id)
+		sets = CardsSet.objects.filter(creator=user_id)[:10]
 	except User.DoesNotExist:
 		raise Http404
 	return render(
 		request, 'learningSet/user_detail.html',
-		{'user': user}
+		{'user': user, 'sets': sets}
 		)
 
 def cardsSets_list(request):
@@ -25,26 +26,26 @@ def cardsSets_list(request):
 	return render(
 		request, 'learningSet/users_list.html',
 		{'sets': sets}
-		)	
+		)
 
-def my_cardsSets_list(request):
-	my_sets = CardsSet.objects.all()[:10]
-
-
-def cardSet(request):
-	set = Card. object.all()[:5]
+def cardsSet_detail(request, set_id):
+	try:
+		set = CardsSet.objects.get(id=set_id)
+		cards =Card.objects.filter(cardsSet=set_id)[:20]
+	except CardsSet.DoesNotExist:
+		raise Http404
 	return render(
-		request, 'learningSet/cardSet_detail.html',
+		request, 'learningSet/cardsSet_detail.html',
+		{'set': set, 'cards': cards}
 		)
 
 
-
-def card(request, pk):
+def card_detail(request, card_id):
       try:
-          object = Card.objects.get(pk=pk)
-      except Post.DoesNotExist:
+          card = Card.objects.get(id=card_id)
+      except Card.DoesNotExist:
           raise Http404
       return render(
-           request, 'blog/post_detail.html',
-           {'object': object}
+           request, 'learningSet/card_detail.html',
+           {'card': card}
       )

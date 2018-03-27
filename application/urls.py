@@ -22,5 +22,11 @@ urlpatterns = [
     path('users/list/', views.users_list, name='users_list'),
     path(
         'users/<int:user_id>/',
-        views.user_detail, name='user_detail')
+        views.user_detail, name='user_detail'),
+    path(
+        'cardsSet_detail/<int:set_id>/',
+        views.cardsSet_detail, name='set_detail'),
+    path(
+        'card_detail/<int:card_id>/',
+        views.card_detail, name='card_detail')
 ]
