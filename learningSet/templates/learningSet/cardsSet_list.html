@@ -1,0 +1,15 @@
+{% extends 'learningSet/cardsSet_base.html' %}
+{% block content %}
+	<h1>Welcome to Learning Set Project</h1>
+	<h2>Latest Sets</h2>
+	{% for set in sets %}
+		<div>
+			<a href="{% url 'set_detail' set.id %}">{{set.name}}</a>
+		</div>
+		<div>{{set.description}}</div>
+		<br>
+	{% endfor %}
+	<h2>
+		<a href="{% url 'users_list' %}">Users</a>
+	</h2>
+{% endblock %}

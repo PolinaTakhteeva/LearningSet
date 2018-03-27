@@ -24,7 +24,7 @@ def user_detail(request, user_id):
 def cardsSets_list(request):
 	sets = CardsSet.objects.all()[:10]
 	return render(
-		request, 'learningSet/users_list.html',
+		request, 'learningSet/cardsSet_list.html',
 		{'sets': sets}
 		)
 

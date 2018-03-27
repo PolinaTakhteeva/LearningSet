@@ -19,6 +19,7 @@ from learningSet import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.cardsSets_list, name='welcome'),
     path('users/list/', views.users_list, name='users_list'),
     path(
         'users/<int:user_id>/',

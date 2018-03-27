@@ -1,10 +1,9 @@
 {% extends 'learningSet/users_base.html' %}
 {% block content %}
+	<h1>Users</h1>
 	{% for user in users %}
 		<div>
 			<a href="{% url 'user_detail' user.id %}">{{user}}</a>
 		</div>
 	{% endfor %}
 {% endblock %}
-
-<!-- {{ user_detail.get_absolute_url}} -->
