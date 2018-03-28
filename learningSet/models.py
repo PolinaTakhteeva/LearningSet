@@ -20,12 +20,13 @@ class Comment(models.Model):
 
 
 class CardsSet(models.Model): #group with rights
-	name = models.CharField(max_length=255, db_index=True) #unic control  by data base
+	name = models.CharField(max_length=255, db_index=True)
 	description = models.TextField(null=True)
 	educational_material = models.TextField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	comments = GenericRelation(Comment)
+	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
 
 	class Meta:
 		ordering = ('created_at',)
@@ -45,7 +46,6 @@ class Card(models.Model):
         verbose_name_plural = 'Флеш-карты'
 
 
-# Many to many tables 
 class Favorite(models.Model): #fk
 	user = models.ForeignKey(User, on_delete=models.CASCADE);
 	CardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE)
@@ -53,14 +53,6 @@ class Favorite(models.Model): #fk
 	class Meta:
 		verbose_name = 'Избранное'
 		verbose_name_plural = 'Избранные наборы флеш-карт'
-
-class TestGroup(models.Model):
-	parentCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.parentCardsSet+')
-	childCardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE, related_name='TestGroup.childCardsSet+')
-			
-
-		
-
 
   
 
