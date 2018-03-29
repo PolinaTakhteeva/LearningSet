@@ -29,5 +29,7 @@ urlpatterns = [
         views.cardsSet_detail, name='set_detail'),
     path(
         'card_detail/<int:card_id>/',
-        views.card_detail, name='card_detail')
+        views.card_detail, name='card_detail'),
+    path('login/', views.login, name='login')
+
 ]

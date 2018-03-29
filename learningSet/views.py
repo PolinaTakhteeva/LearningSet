@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import Http404
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login
 from learningSet.models import Card, CardsSet
+from learningSet.forms import LoginForm
 
 def users_list(request):
 	users = User.objects.all()[:20]
@@ -49,3 +51,26 @@ def card_detail(request, card_id):
            request, 'learningSet/card_detail.html',
            {'card': card}
       )
+
+
+def login(request):
+    if request.method == 'POST':
+    	print('Post')
+    	form = LoginForm(request.POST)
+    	username = request.POST['username']
+    	password = request.POST['password']
+    	user = authenticate(username=username, password=password)
+    	if user is not None:
+        	auth_login(request, user)
+        	sets = CardsSet.objects.all()[:10]
+        	return render(
+				request, 'learningSet/cardsSet_list.html',
+				{'sets': sets}
+				)
+    else:
+    	print('Get')
+    	form = LoginForm()
+    return render(
+        request, 'login.html',
+        {'form': form }
+    )
