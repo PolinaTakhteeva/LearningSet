@@ -65,7 +65,7 @@ def login(request):
         	sets = CardsSet.objects.all()[:10]
         	return render(
 				request, 'learningSet/cardsSet_list.html',
-				{'sets': sets}
+				{'sets': sets, 'username': username}
 				)
     else:
     	print('Get')

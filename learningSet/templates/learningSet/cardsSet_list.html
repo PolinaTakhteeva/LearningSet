@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>Welcome to Learning Set Project</h1>
+	<h1>Welcome to Learning Set Project{% if username %}, {{username}}{% endif %}!</h1>
 	<h2>Latest Sets</h2>
 	{% for set in sets %}
 		<div>
