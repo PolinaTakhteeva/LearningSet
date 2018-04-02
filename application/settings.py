@@ -121,6 +121,7 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.profiling.ProfilingPanel',
 ]
 
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'example', 'static')]
 
 

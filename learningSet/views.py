@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
-from learningSet.models import Card, CardsSet
+from learningSet.models import Card, CardsSet, Favorite
 from learningSet.forms import LoginForm
 
 def users_list(request):
@@ -33,12 +34,13 @@ def cardsSets_list(request):
 def cardsSet_detail(request, set_id):
 	try:
 		set = CardsSet.objects.get(id=set_id)
+		likes = Favorite.objects.filter(set=set_id).count()
 		cards =Card.objects.filter(cardsSet=set_id)[:20]
 	except CardsSet.DoesNotExist:
 		raise Http404
 	return render(
 		request, 'learningSet/cardsSet_detail.html',
-		{'set': set, 'cards': cards}
+		{'set': set, 'cards': cards, 'likes': likes}
 		)
 
 
@@ -55,7 +57,6 @@ def card_detail(request, card_id):
 
 def login(request):
     if request.method == 'POST':
-    	print('Post')
     	form = LoginForm(request.POST)
     	username = request.POST['username']
     	password = request.POST['password']
@@ -68,7 +69,6 @@ def login(request):
 				{'sets': sets, 'username': username}
 				)
     else:
-    	print('Get')
     	form = LoginForm()
     return render(
         request, 'login.html',

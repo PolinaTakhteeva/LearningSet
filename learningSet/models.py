@@ -48,7 +48,7 @@ class Card(models.Model):
 
 class Favorite(models.Model): #fk
 	user = models.ForeignKey(User, on_delete=models.CASCADE);
-	CardsSet = models.ForeignKey(CardsSet, on_delete=models.CASCADE)
+	set = models.ForeignKey(CardsSet, on_delete=models.CASCADE)
 
 	class Meta:
 		verbose_name = 'Избранное'
