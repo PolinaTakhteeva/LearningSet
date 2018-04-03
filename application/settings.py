@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'javascript_settings',
     'bootstrap3',
+    'jquery',
+    'django_ajax',
     'learningSet.apps.LearningsetConfig',
 ]
 
@@ -123,6 +126,10 @@ DEBUG_TOOLBAR_PANELS = [
 
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'example', 'static')]
+
+STATICFILES_FINDERS = (
+    'javascript_settings.finders.JavascriptSettingsFinder',
+)
 
 
 # Internationalization

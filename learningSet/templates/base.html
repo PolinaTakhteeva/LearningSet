@@ -1,6 +1,10 @@
-{% load bootstrap3 %}
 <html>
 <header><title>Learning Set</title></header>
+<head>
+{% load javascript_settings_tags %}
+<script type="text/javascript">{% javascript_settings %}</script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+</head>
 <body>
 	{% block content %}
 	{% endblock %}

@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
 {% block content %}
 	<div>
 		<h1>{{set.name}}</h1>
@@ -6,7 +8,13 @@
 		<br>
 		<div>{{set.educational_material}}</div>
 		<br>
-		<div>Likes: {{likes}}</div>
+		<div>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+			<button type="button" id="like" class="btn btn-default" aria-label="Left Align">
+			  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+			</button>
+		 	{{likes}}
+		 </div>
 		<h2>Test qustions:</h2>
 		{% for card in cards %}
 			<div>
@@ -15,4 +23,25 @@
 			<br>
 		{% endfor %}
 	</div>
+	{% block extra_js %}
+	<script>
+		$( "#like" ).click(function() {
+			var set_id = "{{set.id}}";
+			$.ajax({
+               	type: "POST",
+               	url: "{% url 'like' %}",
+               	data: {'set_id': set_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               	dataType: "json",
+               	success: function(response) {
+                      	alert(response.message);
+                },
+                error: function(rs, e) {
+                       	alert(rs.responseText);
+                }
+          	});
+			alert(username);
+		});
+	</script>
+	{% endblock extra_js %}
 {% endblock %}
+

@@ -26,6 +26,7 @@ class CardsSet(models.Model): #group with rights
 	created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	comments = GenericRelation(Comment)
+	# likes = models.ManyToManyField(User, null=True)
 	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
 
 	class Meta:

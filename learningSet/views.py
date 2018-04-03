@@ -1,10 +1,17 @@
-from django.shortcuts import render
-from django.http import Http404
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404, HttpResponse
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
 from learningSet.models import Card, CardsSet, Favorite
 from learningSet.forms import LoginForm
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
 
 def users_list(request):
 	users = User.objects.all()[:20]
@@ -32,15 +39,18 @@ def cardsSets_list(request):
 		)
 
 def cardsSet_detail(request, set_id):
+	set = CardsSet.objects.get(id=set_id)
+	likes = Favorite.objects.filter(set=set_id).count()
+	cards = Card.objects.filter(cardsSet=set_id)[:20]
+	username = None
 	try:
-		set = CardsSet.objects.get(id=set_id)
-		likes = Favorite.objects.filter(set=set_id).count()
-		cards =Card.objects.filter(cardsSet=set_id)[:20]
+		if request.user.is_authenticated:
+			user = request.user
 	except CardsSet.DoesNotExist:
 		raise Http404
 	return render(
 		request, 'learningSet/cardsSet_detail.html',
-		{'set': set, 'cards': cards, 'likes': likes}
+		{'set': set, 'likes': likes, 'cards': cards, 'user': user}
 		)
 
 
@@ -74,3 +84,22 @@ def login(request):
         request, 'login.html',
         {'form': form }
     )
+
+
+@login_required
+@require_POST
+def like(request):
+    if request.method == 'POST':
+        user = request.user
+        user = User.objects.get(id=user.id)
+        set_id = request.POST.get('set_id', None)
+        set = CardsSet.objects.get(id=set_id)
+        if not Favorite.objects.filter(set=set_id, user=user):
+        	like = Favorite(user=user, set = set)
+        	like.save()
+        	message = 'Cards set was added to Favorites sets'
+        else:
+        	message = 'Cards set was removed from Favorites sets'
+    # ctx = {'likes_count': company.total_likes, 'message': message}
+    ctx = {'message': message}
+    return HttpResponse(json.dumps(ctx), content_type='application/json')
