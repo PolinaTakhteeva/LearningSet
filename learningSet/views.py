@@ -99,7 +99,8 @@ def like(request):
         	like.save()
         	message = 'Cards set was added to Favorites sets'
         else:
+        	Favorite.objects.filter(set=set_id, user=user).delete()
         	message = 'Cards set was removed from Favorites sets'
-    # ctx = {'likes_count': company.total_likes, 'message': message}
-    ctx = {'message': message}
+    likes = Favorite.objects.filter(set=set_id).count()
+    ctx = {'message': message, 'likes': likes}
     return HttpResponse(json.dumps(ctx), content_type='application/json')

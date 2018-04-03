@@ -13,7 +13,7 @@
 			<button type="button" id="like" class="btn btn-default" aria-label="Left Align">
 			  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
 			</button>
-		 	{{likes}}
+		 	<span id=likes_count>{{likes}}</span>
 		 </div>
 		<h2>Test qustions:</h2>
 		{% for card in cards %}
@@ -34,12 +34,12 @@
                	dataType: "json",
                	success: function(response) {
                       	alert(response.message);
+                      	$( "#likes_count" ).text(response.likes);
                 },
                 error: function(rs, e) {
                        	alert(rs.responseText);
                 }
           	});
-			alert(username);
 		});
 	</script>
 	{% endblock extra_js %}
