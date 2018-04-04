@@ -33,8 +33,13 @@
                	data: {'set_id': set_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                	dataType: "json",
                	success: function(response) {
-                      	alert(response.message);
+                      	// alert(response.message);
                       	$( "#likes_count" ).text(response.likes);
+                      	if (response.status == 1) {
+                      		$( "#like" ).css('background-color', '#60a3bc')
+                      	}else{
+                      		$( "#like" ).css('background-color', 'white')
+                      	}
                 },
                 error: function(rs, e) {
                        	alert(rs.responseText);
