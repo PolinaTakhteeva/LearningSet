@@ -15,13 +15,14 @@
 			</button>
 		 	<span id=likes_count>{{likes}}</span>
 		 </div>
-		<h2>Test qustions:</h2>
+		<h2>Вопросы теста:</h2>
 		{% for card in cards %}
 			<div>
 				<a href="{% url 'card_detail' card.id %}">{{card.question}}</a>
 			</div>
 			<br>
 		{% endfor %}
+</div>
 	</div>
 	{% block extra_js %}
 	<script>
@@ -33,7 +34,6 @@
                	data: {'set_id': set_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                	dataType: "json",
                	success: function(response) {
-                      	// alert(response.message);
                       	$( "#likes_count" ).text(response.likes);
                       	if (response.status == 1) {
                       		$( "#like" ).css('background-color', '#60a3bc')

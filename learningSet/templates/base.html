@@ -1,10 +1,27 @@
 <html>
 <header><title>Learning Set</title></header>
 <head>
-{% load javascript_settings_tags %}
-<script type="text/javascript">{% javascript_settings %}</script>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+	{% load static %}
+	{% load bootstrap3 %}
+	{% bootstrap_css %}
+	{% bootstrap_javascript %}
+	{% bootstrap_messages %}
+	<link rel="stylesheet" href="{% static "css/base.css" %}"/>
+	{% load javascript_settings_tags %}
+	<script type="text/javascript">{% javascript_settings %}</script>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 </head>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+      <a class="navbar-brand" href="{% url 'login' %}">Кабинет</a>
+      <a class="navbar-brand" href="{% url 'users_list' %}">Пользователи</a>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
 <body>
 	{% block content %}
 	{% endblock %}

@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from learningSet import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.cardsSets_list, name='welcome'),
+    path('welcome/', views.welcome, name='welcome'),
+    path('', views.cardsSets_list, name='sets_list'),
     path('users/list/', views.users_list, name='users_list'),
     path(
         'users/<int:user_id>/',
@@ -32,4 +35,4 @@ urlpatterns = [
         views.card_detail, name='card_detail'),
     path('login/', views.login, name='login'),
     path('like/', views.like, name='like')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
