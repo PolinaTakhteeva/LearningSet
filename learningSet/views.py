@@ -12,6 +12,10 @@ except ImportError:
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
+def welcome(request):
+	return render(
+		request, 'learningSet/welcome_ex.html',
+		)
 
 def users_list(request):
 	users = User.objects.all()[:20]
@@ -97,12 +101,15 @@ def like(request):
         if not Favorite.objects.filter(set=set_id, user=user):
         	like = Favorite(user=user, set = set)
         	like.save()
+        	set.likes_count+=1
         	status = 1
         	message = 'Cards set was added to Favorites sets'
         else:
         	Favorite.objects.filter(set=set_id, user=user).delete()
+        	set.likes_count-=1
         	message = 'Cards set was removed from Favorites sets'
         	status = 0
+        set.save()
     likes = Favorite.objects.filter(set=set_id).count()
     ctx = {'message': message, 'likes': likes, 'status': status}
     return HttpResponse(json.dumps(ctx), content_type='application/json')

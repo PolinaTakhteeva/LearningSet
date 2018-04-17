@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-	<h1>Welcome to Learning Set Project{% if username %}, {{username}}{% endif %}!</h1>
-	<h2>Latest Sets</h2>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<h1 class="welcome-header">Welcome to Learning Set Project{% if username %}, {{username}}{% endif %}!</h1>
+	<img src="{% static "main.jpg" %}" class="img" alt="My image"/>
+	<h1 class="welcome-header">Latest Sets</h1>
 	{% for set in sets %}
-		<div>
+		<h2>
 			<a href="{% url 'set_detail' set.id %}">{{set.name}}</a>
+		</h2>
+		<h4>{{set.description}}</h4>
+		<div>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+			<button type="button" id="like" class="btn btn-default" aria-label="Left Align">
+			<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+			</button>
+		 	<span id=likes_count>{{likes}}</span>
+			{{set.likes_count}}
 		</div>
-		<div>{{set.description}}</div>
 		<br>
 	{% endfor %}
-	<h2>
-		<a href="{% url 'users_list' %}">Users</a>
-	</h2>
 {% endblock %}

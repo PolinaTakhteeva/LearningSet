@@ -125,13 +125,6 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'example', 'static')]
-
-STATICFILES_FINDERS = (
-    'javascript_settings.finders.JavascriptSettingsFinder',
-)
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -150,3 +143,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
+
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+]
+
+STATICFILES_FINDERS = (
+    'javascript_settings.finders.JavascriptSettingsFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+try:
+    from application.local_settings import *
+except ImportError:
+    pass
