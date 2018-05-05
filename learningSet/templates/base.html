@@ -13,7 +13,7 @@
 </head>
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
       <a class="navbar-brand" href="{% url 'login' %}">Кабинет</a>
-      <a class="navbar-brand" href="{% url 'users_list' %}">Пользователи</a>
+      <a class="navbar-brand" href="{% url 'set_add' %}">Создать набор</a>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <form class="form-inline">
@@ -26,4 +26,8 @@
 	{% block content %}
 	{% endblock %}
 </body>
+<footer>
+	<br>
+	<br>
+</footer>
 </html>

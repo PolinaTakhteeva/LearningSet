@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from learningSet.models import Card, CardsSet, Favorite
+
 
 class LoginForm(forms.ModelForm):
     

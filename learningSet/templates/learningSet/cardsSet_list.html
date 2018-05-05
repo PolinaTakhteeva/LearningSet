@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<h1 class="welcome-header">Welcome to Learning Set Project{% if username %}, {{username}}{% endif %}!</h1>
-	<img src="{% static "main.jpg" %}" class="img" alt="My image"/>
-	<h1 class="welcome-header">Latest Sets</h1>
+	<h1 class="welcome-header">Добро пожаловать в приложение для эффективного обучения{% if username %}, {{username}}{% endif %}!</h1>
+	<img src="{% static "main.jpg" %}" class="img" alt="Main image"/>
+	<h1 class="welcome-header">Последние наборы флеш-карт для запоминания:</h1>
 	{% for set in sets %}
 		<h2>
 			<a href="{% url 'set_detail' set.id %}">{{set.name}}</a>

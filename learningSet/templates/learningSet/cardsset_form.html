@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<h1>Создать набор флеш-карт:</h1>
+    <form method="post">
+    {% csrf_token %}
+    	{% bootstrap_form form %}
+    	{% buttons %}
+        	<button id="cardsSet_create" type="submit" class="btn btn-primary">
+           		{% bootstrap_icon "star" %} Создать
+        	</button>
+    	{% endbuttons %}
+    </form>
+    {% block extra_js %}
+	<script>
+		$( "#cardsSet_create" ).click(function() {
+			// var set_id = "{{set.id}}";
+			$.ajax({
+               	type: "POST",
+               	url: "{% url 'cardsSet_create' %}",
+               	data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               	dataType: "json",
+               	success: function(response) {
+                      	$( "#likes_count" ).text(response.likes);
+                      	if (response.status == 1) {
+                      		$( "#like" ).css('background-color', '#60a3bc')
+                      	}else{
+                      		$( "#like" ).css('background-color', 'white')
+                      	}
+                },
+                error: function(rs, e) {
+                       	alert(rs.responseText);
+                }
+          	});
+		});
+	</script>
+	{% endblock extra_js %}
+{% endblock %}

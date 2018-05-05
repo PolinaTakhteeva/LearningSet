@@ -18,6 +18,8 @@ from django.urls import path, include
 from learningSet import views
 from django.conf import settings
 from django.conf.urls.static import static
+from learningSet.views import CardsSetCreate, CardsSetUpdate, CardsSetDelete
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +35,10 @@ urlpatterns = [
     path(
         'card_detail/<int:card_id>/',
         views.card_detail, name='card_detail'),
+    path('set/add/', CardsSetCreate.as_view(), name='set_add'),
+    path('set/<int:pk>/', CardsSetUpdate.as_view(), name='set_update'),
+    path('set/<int:pk>/delete/', CardsSetDelete.as_view(), name='set_delete'),
     path('login/', views.login, name='login'),
-    path('like/', views.like, name='like')
+    path('like/', views.like, name='like'),
+    path('cardsSet_create/', views.cardsSet_create, name='cardsSet_create')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

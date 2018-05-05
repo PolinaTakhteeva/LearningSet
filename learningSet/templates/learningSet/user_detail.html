@@ -5,11 +5,12 @@
 			<div>Username: &thinsp; {{user}}</div>
 			<div>Email: &thinsp; {{user.email}}</div>
 			<br>
-			<h2>User cards sets:</h2>
+			<h2>Наборы флеш-карт, созданные пользователем:</h2>
 			{% for set in sets %}
 				<h3>
 				<a href="{% url 'set_detail' set.id %}">{{set.name}}</a>
 				</h3>
+				<h4>{{set.description}}</h4>
 			{% endfor %}
 		</div>
 {% endblock %}

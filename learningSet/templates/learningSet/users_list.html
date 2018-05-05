@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>Users</h1>
+	<h1>Пользователи приложения:</h1>
 	{% for user in users %}
 		<h2>
 			<a href="{% url 'user_detail' user.id %}">{{user}}</a>

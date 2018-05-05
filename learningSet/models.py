@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
+from django.urls import reverse
 
 
 class Comment(models.Model):
@@ -28,6 +29,12 @@ class CardsSet(models.Model): #group with rights
 	comments = GenericRelation(Comment)
 	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
 	likes_count = models.IntegerField(null=True, blank=True, default=0)
+
+	# def get_absolute_url(self):
+	# 	return reverse('set_detail', kwargs={'pk': self.pk})
+
+	def get_absolute_url(self):
+		return "/cardsSet_detail/%i/" % self.id
 
 	class Meta:
 		ordering = ('created_at',)

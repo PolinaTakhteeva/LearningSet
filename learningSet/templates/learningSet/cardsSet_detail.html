@@ -4,7 +4,7 @@
 {% block content %}
 	<div>
 		<h1>{{set.name}}</h1>
-		<div>{{set.description}}</div>
+		<h4>{{set.description}}</h4>
 		<br>
 		<div>{{set.educational_material}}</div>
 		<br>
@@ -22,8 +22,20 @@
 			</div>
 			<br>
 		{% endfor %}
+		<br>
+		{% buttons %}
+        	<button id="card_create" type="submit" class="btn btn-primary">
+           		{% bootstrap_icon "plus" %} Добавить вопрос
+        	</button>
+        {% endbuttons %}
+        	<br>
+        {% buttons %}
+        	<button id="set_update" type="submit" class="btn btn-primary">
+           		{% bootstrap_icon "pencil" %} Редактировать набор флеш-карт
+        	</button>
+        {% endbuttons %}
+
 </div>
-	</div>
 	{% block extra_js %}
 	<script>
 		$( "#like" ).click(function() {
@@ -34,12 +46,8 @@
                	data: {'set_id': set_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                	dataType: "json",
                	success: function(response) {
-                      	$( "#likes_count" ).text(response.likes);
-                      	if (response.status == 1) {
-                      		$( "#like" ).css('background-color', '#60a3bc')
-                      	}else{
-                      		$( "#like" ).css('background-color', 'white')
-                      	}
+               		alert("Поля молодец!")
+
                 },
                 error: function(rs, e) {
                        	alert(rs.responseText);
