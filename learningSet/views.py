@@ -166,7 +166,7 @@ class AjaxableResponseMixin:
 
 class CardsSetCreate(AjaxableResponseMixin, CreateView):
     model = CardsSet
-    fields = ['name', 'description', 'educational_material', 'creator']
+    fields = ['name', 'description', 'educational_material']
 
 
 @login_required
@@ -175,10 +175,16 @@ def cardsSet_create(request):
     if request.method == 'POST':
     	#Get creator
         user = request.user
-        message = "lalala"
+        user = User.objects.get(id=user.id)
+        name = request.POST['name']
+        description = request.POST['description']
+        educational_material = request.POST['educational_material']
+        set = CardsSet(name=name, description=description, educational_material=educational_material, creator=user)
+        set.save()
 
-    ctx = {'message': message}
+    ctx = {'message': 'sucsess'}
     return HttpResponse(json.dumps(ctx), content_type='application/json')
+    
 
 class CardsSetUpdate(UpdateView):
     model = CardsSet
@@ -187,6 +193,34 @@ class CardsSetUpdate(UpdateView):
 class CardsSetDelete(DeleteView):
     model = CardsSet
     success_url = reverse_lazy('sets_list')
+
+
+
+class CardCreate(AjaxableResponseMixin, CreateView):
+    model = Card
+    fields = ['question', 'answer']
+
+class CardUpdate(UpdateView):
+    model = Card
+    fields = ['question', 'answer']
+
+class CardDelete(DeleteView):
+    model = Card
+    success_url = reverse_lazy('sets_list')
+
+
+@login_required
+@require_POST
+def card_create(request):
+    if request.method == 'POST':
+    	#Get creator
+        user = request.user
+
+    ctx = {'message': message}
+    return HttpResponse(json.dumps(ctx), content_type='application/json')
+
+
+
 
 
 

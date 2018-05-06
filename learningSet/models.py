@@ -30,11 +30,11 @@ class CardsSet(models.Model): #group with rights
 	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
 	likes_count = models.IntegerField(null=True, blank=True, default=0)
 
-	# def get_absolute_url(self):
-	# 	return reverse('set_detail', kwargs={'pk': self.pk})
-
 	def get_absolute_url(self):
-		return "/cardsSet_detail/%i/" % self.id
+		return reverse('set_detail', kwargs={'pk': self.pk})
+
+	# def get_absolute_url(self):
+	# 	return "/set_detail/%i/" % self.id
 
 	class Meta:
 		ordering = ('created_at',)
@@ -48,6 +48,9 @@ class Card(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     cardsSet = models.ForeignKey(CardsSet, on_delete=models.SET_NULL, null=True)
     comments = GenericRelation(Comment)
+
+    # def get_absolute_url(self):
+    # 	return "/card_detail/%i/" % self.id
 
     class Meta:
         verbose_name = 'Флеш-карта'

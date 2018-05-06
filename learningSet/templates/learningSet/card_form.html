@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 {% block content %}
-<h1>Войти:</h1>
+<h1>Новая флеш-карта:</h1>
     <form method="post">
     <div class="easy-form">
     {% csrf_token %}
     	{% bootstrap_form form %}
     	{% buttons %}
-        	<button type="submit" class="btn btn-primary">
-           		{% bootstrap_icon "star" %} Submit
-        	</button>
+        	<button id="cardsSet_create" type="submit" class="btn btn-primary">Добавить</button>
     	{% endbuttons %}
     </div>
     </form>
+    {% block extra_js %}
+	{% endblock extra_js %}
 {% endblock %}

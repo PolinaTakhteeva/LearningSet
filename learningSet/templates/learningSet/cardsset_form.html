@@ -2,37 +2,43 @@
 {% load bootstrap3 %}
 {% block content %}
 <h1>Создать набор флеш-карт:</h1>
-    <form method="post">
+    <form method="post" id="cardsSet_create">
+    <div class="easy-form">
     {% csrf_token %}
     	{% bootstrap_form form %}
     	{% buttons %}
-        	<button id="cardsSet_create" type="submit" class="btn btn-primary">
-           		{% bootstrap_icon "star" %} Создать
-        	</button>
+        	<button class="btn btn-primary">Создать</button>
     	{% endbuttons %}
+    </div>
     </form>
     {% block extra_js %}
 	<script>
-		$( "#cardsSet_create" ).click(function() {
-			// var set_id = "{{set.id}}";
-			$.ajax({
-               	type: "POST",
-               	url: "{% url 'cardsSet_create' %}",
-               	data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-               	dataType: "json",
-               	success: function(response) {
-                      	$( "#likes_count" ).text(response.likes);
-                      	if (response.status == 1) {
-                      		$( "#like" ).css('background-color', '#60a3bc')
-                      	}else{
-                      		$( "#like" ).css('background-color', 'white')
-                      	}
-                },
-                error: function(rs, e) {
-                       	alert(rs.responseText);
-                }
-          	});
-		});
+		$( "#cardsSet_create" ).on('submit', function(event){
+        event.preventDefault();
+        console.log("form submitted!")  // sanity check
+        submit_form();
+    });
+        function submit_form() {
+          var name = $('input[name=name]').val();
+          var description = $('textarea[name=description]').val();
+          var educational_material = $('textarea[name=educational_material]').val();
+  			$.ajax({
+                 	type: "POST",
+                 	url: "{% url 'cardsSet_create' %}",
+                 	data: {'name': name, 
+                          'description': description, 
+                          'educational_material': educational_material, 
+                          'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                 	dataType: "json",
+                 	success: function(response) {
+                    alert(response.message)
+                  },
+                  error: function(rs, e) {
+                         	alert(rs.responseText);
+                  }
+            	});
+      }
+		
 	</script>
 	{% endblock extra_js %}
 {% endblock %}
