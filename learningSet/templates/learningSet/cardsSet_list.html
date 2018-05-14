@@ -2,22 +2,32 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<div class="wrapper">
 	<h1 class="welcome-header">Добро пожаловать в приложение для эффективного обучения{% if username %}, {{username}}{% endif %}!</h1>
-	<img src="{% static "main.jpg" %}" class="img" alt="Main image"/>
+	<!-- <img src="{% static "main.jpg" %}" class="img" alt="Main image"/> -->
 	<h1 class="welcome-header">Последние наборы флеш-карт для запоминания:</h1>
+	<ul class="sets clearfix">
 	{% for set in sets %}
-		<h2>
-			<a href="{% url 'set_detail' set.id %}">{{set.name}}</a>
-		</h2>
-		<h4>{{set.description}}</h4>
-		<div>
+	<li class="set-wrapper">
+	<div class="set">
+<!-- 		<div class="set-img">
+			<img src="{% static "card.png" %}" alt="">
+		</div> -->
+		<div class="set-text">
+			<h2>
+				<a class="set-name" href="{% url 'set_detail' set.id %}">{{set.name}}</a>
+			</h2>
+			<p>{{set.description}}</p>
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 			<button type="button" id="like" class="btn btn-default" aria-label="Left Align">
-			<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+				<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
 			</button>
-		 	<span id=likes_count>{{likes}}</span>
-			{{set.likes_count}}
+		 		<span id=likes_count>{{likes}}</span>
+				{{set.likes_count}}
 		</div>
-		<br>
+	</div>
+	</li>
 	{% endfor %}
+	</ul>
+</div>
 {% endblock %}

@@ -2,7 +2,8 @@
 {% load static %}
 {% load bootstrap3 %}
 {% block content %}
-	<div>
+<div class="wrapper">
+	<div class="easy-form-2">
 		<h1>{{set.name}}</h1>
 		<h4>{{set.description}}</h4>
 		<br>
@@ -22,24 +23,26 @@
 			</div>
 			<br>
 		{% endfor %}
-		<br>
-		{% buttons %}
-        	<button id="card_create" type="submit" class="btn btn-primary" onclick="location.href='{% url 'card_add' %}'">
-           		{% bootstrap_icon "plus" %} Добавить вопрос
-        	</button>
-        {% endbuttons %}
-        	<br>
-        {% buttons %}
-        	<button id="set_update" type="submit" class="btn btn-primary">
-           		{% bootstrap_icon "pencil" %} Редактировать
-        	</button>
-        {% endbuttons %}
-        {% buttons %}
-        	<button id="set_delete" type="submit" class="btn btn-primary">
-           		{% bootstrap_icon "remove" %} Удалить
-        	</button>
-        {% endbuttons %}
-
+		<br>	
+    {% buttons %}
+      <button id="card_create" type="submit" class="btn btn-primary" onclick="location.href='{% url 'card_add' %}'">
+          {% bootstrap_icon "plus" %} Добавить вопрос
+      </button>
+    {% endbuttons %}
+    <br>
+    <span>
+    {% buttons %}
+      <button id="set_update" type="submit" class="btn btn-primary" onclick="location.href='{% url 'set_update' set.id %}'">
+        {% bootstrap_icon "pencil" %} Редактировать
+      </button>
+    {% endbuttons %}
+  
+    {% buttons %}
+      <button id="set_delete" type="submit" class="btn btn-primary">
+        {% bootstrap_icon "remove" %} Удалить
+      </button>
+    {% endbuttons %}
+    </span>
 </div>
 	{% block extra_js %}
 	<script>
@@ -63,7 +66,7 @@
                 }
           	});
 		});
-	</script>
+	</script>  
 	{% endblock extra_js %}
 {% endblock %}
 

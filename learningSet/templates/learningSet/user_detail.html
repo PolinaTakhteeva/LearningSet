@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+	<div class="wrapper">
 		<div>
 			<h1>{{user.first_name}} &thinsp; {{user.last_name}}</h1>
 			<div>Username: &thinsp; {{user}}</div>
@@ -13,4 +14,5 @@
 				<h4>{{set.description}}</h4>
 			{% endfor %}
 		</div>
+	</div>
 {% endblock %}

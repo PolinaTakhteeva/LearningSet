@@ -1,10 +1,25 @@
 body {
 /*  padding-top: 5rem;*/
 padding-top: 0px !important;
+font-family: 'Roboto', sans-serif;
 }
 
-h1, h2, h3, h4{
+h1, h3, h4{
   color: #432b4a;
+}
+
+h1{
+  text-align: center;
+}
+
+h2{
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
 }
 
 .form-inline{
@@ -18,7 +33,115 @@ h1, h2, h3, h4{
   margin-left: auto;
   width: 400px;
 }
+.easy-form-2{
+  margin-right: auto;
+  margin-left: 5%;
+  width: 500px;
+}
 
+.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+/*Sets list styles*/
+
+.sets {
+  list-style: none;
+  margin: 0 -20px 0 0;
+  padding: 0;
+}
+
+.set-wrapper {
+  display: block;
+  width: 100%;
+  float: left;
+  transition: width .2s;
+}
+
+@media only screen and (min-width: 450px) {
+  .set-wrapper {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .set-wrapper {
+    width: 33.333%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .set-wrapper {
+    width: 25%;
+  }
+}
+
+.set {
+  display: block;
+  border: 1px solid #212321;
+  border-radius: 7px;
+  position: relative;
+  background: #fff;
+  margin: 0 20px 20px 0;
+  text-decoration: none;
+  color: #474747;
+  z-index: 0;
+  height: 220px;
+}
+
+.set h2{
+  font-size: 1.4em;
+  color: #277e16;
+  margin: 0 0 .7em;
+}
+
+.set-text{
+    padding: 20px;
+}
+
+.set-img {
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+}
+
+.set-img img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  transition: transform .4s ease-out;
+}
+
+.set:hover .set-img img {
+  transform: scale(1.05);
+}
+
+.set p {
+  position: relative;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.4em;
+  height: 5.6em;
+  overflow: hidden;
+}
+
+.set-name{
+  font-size: 1.4em;
+  color: #555;
+  margin: 0 0 .7em;
+  text-align: center;
+}
+
+
+/*End sets list styles*/
 
 .search-btn{
 	margin-top: 10px;
@@ -131,9 +254,5 @@ h1 {
 .placeholder img {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.welcome-header{
-	text-align: center;
 }
 

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 {% block content %}
+<div class="wrapper">
 <h1>Создать набор флеш-карт:</h1>
     <form method="post" id="cardsSet_create">
     <div class="easy-form">
@@ -11,11 +12,11 @@
     	{% endbuttons %}
     </div>
     </form>
-    {% block extra_js %}
+</div>
+{% block extra_js %}
 	<script>
 		$( "#cardsSet_create" ).on('submit', function(event){
         event.preventDefault();
-        console.log("form submitted!")  // sanity check
         submit_form();
     });
         function submit_form() {
@@ -31,14 +32,13 @@
                           'csrfmiddlewaretoken': '{{ csrf_token }}'},
                  	dataType: "json",
                  	success: function(response) {
-                    alert(response.message)
+                    alert(response.set_id)
                   },
                   error: function(rs, e) {
                          	alert(rs.responseText);
                   }
             	});
       }
-		
 	</script>
-	{% endblock extra_js %}
+{% endblock extra_js %}
 {% endblock %}

@@ -12,7 +12,7 @@ except ImportError:
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 def welcome(request):
 	return render(
@@ -38,7 +38,7 @@ def user_detail(request, user_id):
 		)
 
 def cardsSets_list(request):
-	sets = CardsSet.objects.all()[:10]
+	sets = CardsSet.objects.all().order_by('-likes_count')[:10]
 	return render(
 		request, 'learningSet/cardsSet_list.html',
 		{'sets': sets}
@@ -158,7 +158,7 @@ class AjaxableResponseMixin:
         if self.request.is_ajax():
             data = {
                 'pk': self.object.pk,
-                'message' : 'It is adjax'
+                'message' : 'It is ajax'
             }
             return JsonResponse(data)
         else:
@@ -182,9 +182,9 @@ def cardsSet_create(request):
         set = CardsSet(name=name, description=description, educational_material=educational_material, creator=user)
         set.save()
 
-    ctx = {'message': 'sucsess'}
+    ctx = {'set_id': set.id}
     return HttpResponse(json.dumps(ctx), content_type='application/json')
-    
+
 
 class CardsSetUpdate(UpdateView):
     model = CardsSet
@@ -194,11 +194,29 @@ class CardsSetDelete(DeleteView):
     model = CardsSet
     success_url = reverse_lazy('sets_list')
 
-
-
 class CardCreate(AjaxableResponseMixin, CreateView):
     model = Card
     fields = ['question', 'answer']
+
+@login_required
+@require_POST
+def card_create(request, set_id):
+    if request.method == 'POST':
+        #Get creator
+        user = request.user
+        user = User.objects.get(id=user.id)
+        question = request.POST['question']
+        answer = request.POST['answer']
+        # #get card set id
+        request.GET['set_id']
+        set_id=8
+        set = CardsSet.objects.get(id=set_id)
+        #проверка: user = card set creator
+        card = Card(question=question, answer=answer, cardsSet=set)
+        card.save()
+
+    ctx = {'message': set_id}
+    return HttpResponse(json.dumps(ctx), content_type='application/json')
 
 class CardUpdate(UpdateView):
     model = Card
@@ -208,16 +226,6 @@ class CardDelete(DeleteView):
     model = Card
     success_url = reverse_lazy('sets_list')
 
-
-@login_required
-@require_POST
-def card_create(request):
-    if request.method == 'POST':
-    	#Get creator
-        user = request.user
-
-    ctx = {'message': message}
-    return HttpResponse(json.dumps(ctx), content_type='application/json')
 
 
 
