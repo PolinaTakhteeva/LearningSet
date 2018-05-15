@@ -8,19 +8,31 @@
 		<h4>{{set.description}}</h4>
 		<br>
 		<div>{{set.educational_material}}</div>
+    <br>
 		<br>
-		<div>
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-			<button type="button" id="like" class="btn btn-default" aria-label="Left Align">
-			  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-			</button>
-		 	<span id=likes_count>{{likes}}</span>
-		 </div>
+      <div class="set-btn">
+        {% buttons %}
+        <button type="button" id="like" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+        </button>
+          <span id=likes_count>{{likes}}</span>
+        <span class= "modify-set-btn">
+        <button id="set_update" type="submit" class="btn btn-primary" onclick="location.href='{% url 'set_update' set.id %}'">
+          {% bootstrap_icon "pencil" %} Редактировать
+        </button>
+        <button id="set_delete" type="submit" class="btn btn-primary">
+          {% bootstrap_icon "remove" %} Удалить
+        </button>
+        </span>
+        {% endbuttons %}
+      </div>
 		<h2>Вопросы теста:</h2>
 		{% for card in cards %}
 			<div>
 				<a href="{% url 'card_detail' card.id %}">{{card.question}}</a>
 			</div>
+<!--       <input type='button' id='hideshow' value='hide/show'>
+      <div id='content'>{{card.answer}}</div> -->
 			<br>
 		{% endfor %}
 		<br>	
@@ -30,19 +42,6 @@
       </button>
     {% endbuttons %}
     <br>
-    <span>
-    {% buttons %}
-      <button id="set_update" type="submit" class="btn btn-primary" onclick="location.href='{% url 'set_update' set.id %}'">
-        {% bootstrap_icon "pencil" %} Редактировать
-      </button>
-    {% endbuttons %}
-  
-    {% buttons %}
-      <button id="set_delete" type="submit" class="btn btn-primary">
-        {% bootstrap_icon "remove" %} Удалить
-      </button>
-    {% endbuttons %}
-    </span>
 </div>
 	{% block extra_js %}
 	<script>
@@ -66,7 +65,17 @@
                 }
           	});
 		});
-	</script>  
+	</script>
+  <script>
+  $("#hideshow").click(function() { 
+    $("#content").toggle();
+  });
+    // jQuery(document).ready(function(){
+    //     jQuery('#hideshow').on('click', function(event) {        
+    //          jQuery('#content').toggle('show');
+    //     });
+    // });
+  </script>  
 	{% endblock extra_js %}
 {% endblock %}
 

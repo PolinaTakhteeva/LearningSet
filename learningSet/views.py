@@ -38,7 +38,7 @@ def user_detail(request, user_id):
 		)
 
 def cardsSets_list(request):
-	sets = CardsSet.objects.all().order_by('-likes_count')[:10]
+	sets = CardsSet.objects.all().order_by('-likes_count')[:12]
 	return render(
 		request, 'learningSet/cardsSet_list.html',
 		{'sets': sets}
@@ -188,7 +188,7 @@ def cardsSet_create(request):
 
 class CardsSetUpdate(UpdateView):
     model = CardsSet
-    fields = ['name']
+    fields = ['name', 'description', 'educational_material']
 
 class CardsSetDelete(DeleteView):
     model = CardsSet

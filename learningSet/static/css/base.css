@@ -35,8 +35,8 @@ h2{
 }
 .easy-form-2{
   margin-right: auto;
-  margin-left: 5%;
-  width: 500px;
+  margin-left: 10%;
+  width: 700px;
 }
 
 .wrapper {
@@ -141,7 +141,23 @@ h2{
 }
 
 
-/*End sets list styles*/
+/*Set details*/
+
+.set-btn .modify-set-btn{
+  float: right;
+}
+
+.set-btn {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (min-width: 600px) {
+    .set-btn {
+      flex-direction: column;
+    }
+}
+
 
 .search-btn{
 	margin-top: 10px;
