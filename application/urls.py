@@ -9,7 +9,6 @@ from learningSet.views import CardsSetCreate, CardsSetUpdate, CardsSetDelete, Ca
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('welcome/', views.welcome, name='welcome'),
     path('', views.cardsSets_list, name='sets_list'),
     path('users/list/', views.users_list, name='users_list'),
     path(

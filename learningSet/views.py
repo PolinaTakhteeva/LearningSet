@@ -13,18 +13,21 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
-def welcome(request):
-	return render(
-		request, 'learningSet/welcome_ex.html',
-		)
 
 def users_list(request):
-	users = User.objects.all()[:20]
-	return render(
-		request, 'learningSet/users_list.html',
-		{'users': users}
-		)
+    user_list = User.objects.all()
+    paginator = Paginator(user_list, 10)
+
+    page = request.GET.get('page')
+    users = paginator.get_page(page)
+    return render(request, 'learningSet/users_list.html', {'users': users})
+	# users = User.objects.all()[:20]
+	# return render(
+	# 	request, 'learningSet/users_list.html',
+	# 	{'users': users}
+	# 	)
 
 def user_detail(request, user_id):
 	try:
@@ -225,6 +228,16 @@ class CardUpdate(UpdateView):
 class CardDelete(DeleteView):
     model = Card
     success_url = reverse_lazy('sets_list')
+
+
+
+# def listing(request):
+#     user_list = User.objects.all()
+#     paginator = Paginator(user_list, 10)
+
+#     page = request.GET.get('page')
+#     users = paginator.get_page(page)
+#     return render(request, 'list.html', {'users': users})
 
 
 
