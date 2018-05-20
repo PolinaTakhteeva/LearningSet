@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.cardsSets_list, name='sets_list'),
     path('users/list/', views.users_list, name='users_list'),
+    
     path(
         'users/<int:user_id>/',
         views.user_detail, name='user_detail'),
@@ -32,5 +33,8 @@ urlpatterns = [
     path('card_create/', views.card_create, name='card_create'),
 
     path('login/', views.login, name='login'),
-    path('like/', views.like, name='like')
+    path('like/', views.like, name='like'),
+    path('api/users/list/', views.users_list_api, name='users_list_api')
+    
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

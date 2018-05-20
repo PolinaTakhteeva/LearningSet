@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
@@ -16,18 +16,25 @@ from django.urls import reverse_lazy, reverse
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
+
 def users_list(request):
+    users = User.objects.all()[:10]
+    return render(    
+        request, 'learningSet/users_list.html',
+         {'users': users}
+    )
+
+def users_list_api(request):
     user_list = User.objects.all()
     paginator = Paginator(user_list, 10)
 
     page = request.GET.get('page')
     users = paginator.get_page(page)
-    return render(request, 'learningSet/users_list.html', {'users': users})
-	# users = User.objects.all()[:20]
-	# return render(
-	# 	request, 'learningSet/users_list.html',
-	# 	{'users': users}
-	# 	)
+
+    return render(
+            request, 'learningSet/users_paginator.html',
+            {'users': users}
+    )
 
 def user_detail(request, user_id):
 	try:
@@ -155,7 +162,7 @@ class AjaxableResponseMixin:
 
     def form_valid(self, form):
         # We make sure to call the parent's form_valid() method because
-        # it might do some processing (in the case of CreateView, it will
+        # it miJsonResponseght do some processing (in the case of CreateView, it will
         # call form.save() for example).
         response = super().form_valid(form)
         if self.request.is_ajax():
@@ -210,7 +217,7 @@ def card_create(request, set_id):
         user = User.objects.get(id=user.id)
         question = request.POST['question']
         answer = request.POST['answer']
-        # #get card set id
+        #get card set id
         request.GET['set_id']
         set_id=8
         set = CardsSet.objects.get(id=set_id)
@@ -230,14 +237,6 @@ class CardDelete(DeleteView):
     success_url = reverse_lazy('sets_list')
 
 
-
-# def listing(request):
-#     user_list = User.objects.all()
-#     paginator = Paginator(user_list, 10)
-
-#     page = request.GET.get('page')
-#     users = paginator.get_page(page)
-#     return render(request, 'list.html', {'users': users})
 
 
 

@@ -1,0 +1,6 @@
+{% for user in users %}
+	<h2>
+		<a href="{% url 'user_detail' user.id %}">{{user}}</a>
+		<br>
+	</h2>
+{% endfor %}
