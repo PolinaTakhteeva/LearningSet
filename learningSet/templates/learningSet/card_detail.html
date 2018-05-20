@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
 {% block content %}
 <div class="wrapper">
-<div>Question:</div>
-<h3>{{card.question}}</h3>
-<div>Answer:</div>
-<h3>{{card.answer}}</h3>
-<div></div>
+	Question:
+		<h3>{{card.question}}</h3>
+	Answer:
+		<h3>{{card.answer}}</h3>
+	<br>
+	<br>
+	<button id="card_update" type="submit" class="btn btn-primary" onclick="location.href='{% url 'card_update' card.id %}'">
+          {% bootstrap_icon "pencil" %} Редактировать
+    </button>
+</div>
 {% endblock %}

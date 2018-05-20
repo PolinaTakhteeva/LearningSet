@@ -48,8 +48,8 @@ class Card(models.Model):
     cardsSet = models.ForeignKey(CardsSet, on_delete=models.SET_NULL, null=True)
     comments = GenericRelation(Comment)
 
-    # def get_absolute_url(self):
-    # 	return "/card_detail/%i/" % self.id
+    def get_absolute_url(self):
+    	return "/card_detail/%i/" % self.id
 
     class Meta:
         verbose_name = 'Флеш-карта'

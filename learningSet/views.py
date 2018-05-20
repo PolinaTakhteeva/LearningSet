@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse, HttpResponseRedirect
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
@@ -178,6 +178,13 @@ class CardsSetCreate(AjaxableResponseMixin, CreateView):
     fields = ['name', 'description', 'educational_material']
 
 
+    def form_valid(self, form):
+        set = form.save(commit=False)
+        set.creator = self.request.user
+        set.save()
+        return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': set.id}))
+
+
 @login_required
 @require_POST
 def cardsSet_create(request):
@@ -205,7 +212,13 @@ class CardsSetDelete(DeleteView):
 
 class CardCreate(AjaxableResponseMixin, CreateView):
     model = Card
-    fields = ['question', 'answer']
+    fields = ['question', 'answer', 'cardsSet']
+
+    # def form_valid(self, form):
+    #     card = form.save(commit=False)
+    #     card.save()
+    #     return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': set.id}))
+
 
 @login_required
 @require_POST
