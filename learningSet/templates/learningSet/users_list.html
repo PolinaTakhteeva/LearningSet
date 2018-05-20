@@ -13,36 +13,35 @@
         {% endfor %}
     </div>
     <br>
-    <button id="next_page" class="btn btn-primary">
-        Следующая страница
-    </button>
 </div>
     {% block extra_js %}
-    <script>
-        lock = 0
-        page = 2
-        $("#next_page").click(function() {            
-            if (lock == 0) {
-                lock = 1
+    <script type="text/javascript">
+            $(window).scroll(function(){
+                lock = 0
+                page = 2
+                    if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+                        if (lock == 0) {
+                        lock = 1
             
-                base_url = "{% url 'users_list_api' %}"
-                base_url += "?page=" + page;
+                        base_url = "{% url 'users_list_api' %}"
+                        base_url += "?page=" + page;
 
-                $.ajax({
-                    type: "GET",
-                    url: base_url,
-                    success: function(response) {
-                        $("#users").append(response)
-                        lock = 0
-                        page += 1
-                    },
-                    error: function(rs, e) {
-                        alert('fail');
-                        lock = 0
+                        $.ajax({
+                            type: "GET",
+                            url: base_url,
+                            success: function(response) {
+                                $("#users").append(response)
+                                lock = 0
+                                page += 1
+                            },
+                            error: function(rs, e) {
+                                alert('fail');
+                                lock = 0
+                            }
+                        });
+                        }
                     }
-                });
-            }
-        });
+            }); 
     </script>
     {% endblock extra_js %}
 {% endblock %}
