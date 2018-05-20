@@ -20,7 +20,7 @@ class Comment(models.Model):
 		verbose_name_plural = 'Комментарии'
 
 
-class CardsSet(models.Model): #group with rights
+class CardsSet(models.Model):
 	name = models.CharField(max_length=255, db_index=True)
 	description = models.TextField(null=True)
 	educational_material = models.TextField(null=True)
@@ -28,7 +28,6 @@ class CardsSet(models.Model): #group with rights
 	creator = models.ForeignKey(User, on_delete=models.CASCADE)
 	comments = GenericRelation(Comment)
 	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
-	likes_count = models.IntegerField(null=True, blank=True, default=0)
 
 	def get_absolute_url(self):
 		return reverse('set_detail', kwargs={'pk': self.pk})

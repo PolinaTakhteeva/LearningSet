@@ -48,8 +48,8 @@ def user_detail(request, user_id):
 		)
 
 def cardsSets_list(request):
-	sets = CardsSet.objects.all().order_by('-likes_count')[:12]
-	return render(
+    sets = CardsSet.objects.annotate(num_likes=Count('favorite')).order_by('-num_likes')[:12]
+    return render(
 		request, 'learningSet/cardsSet_list.html',
 		{'sets': sets}
 		)
@@ -137,7 +137,6 @@ def like(request):
         	message = 'Cards set was added to Favorites sets'
         else:
         	Favorite.objects.filter(set=set_id, user=user).delete()
-        	set.likes_count-=1
         	message = 'Cards set was removed from Favorites sets'
         	status = 0
         set.save()

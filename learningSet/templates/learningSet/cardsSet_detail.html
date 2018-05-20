@@ -31,8 +31,6 @@
 			<div>
 				<a href="{% url 'card_detail' card.id %}">{{card.question}}</a>
 			</div>
-<!--       <input type='button' id='hideshow' value='hide/show'>
-      <div id='content'>{{card.answer}}</div> -->
 			<br>
 		{% endfor %}
 		<br>	
@@ -66,16 +64,6 @@
           	});
 		});
 	</script>
-  <script>
-  $("#hideshow").click(function() { 
-    $("#content").toggle();
-  });
-    // jQuery(document).ready(function(){
-    //     jQuery('#hideshow').on('click', function(event) {        
-    //          jQuery('#content').toggle('show');
-    //     });
-    // });
-  </script>  
 	{% endblock extra_js %}
 {% endblock %}
 
