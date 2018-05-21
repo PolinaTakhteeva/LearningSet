@@ -29,11 +29,11 @@ class CardsSet(models.Model):
 	comments = GenericRelation(Comment)
 	parentCardsSet = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
 
-	def get_absolute_url(self):
-		return reverse('set_detail', kwargs={'pk': self.pk})
-
 	# def get_absolute_url(self):
-	# 	return "/set_detail/%i/" % self.id
+	# 	return reverse('set_detail', kwargs={'pk': self.pk})
+
+	def get_absolute_url(self):
+		return "/set_detail/%i/" % self.id
 
 	class Meta:
 		ordering = ('created_at',)

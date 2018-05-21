@@ -177,12 +177,11 @@ class CardsSetCreate(AjaxableResponseMixin, CreateView):
     model = CardsSet
     fields = ['name', 'description', 'educational_material']
 
-
     def form_valid(self, form):
         set = form.save(commit=False)
         set.creator = self.request.user
         set.save()
-        return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': set.id}))
+        return HttpResponseRedirect("/cardsSet_detail/%i/" % set.id)
 
 
 @login_required
@@ -205,6 +204,11 @@ def cardsSet_create(request):
 class CardsSetUpdate(UpdateView):
     model = CardsSet
     fields = ['name', 'description', 'educational_material']
+    
+    def form_valid(self, form):
+        set = form.save(commit=False)
+        set.save()
+        return HttpResponseRedirect("/cardsSet_detail/%i/" % set.id)
 
 class CardsSetDelete(DeleteView):
     model = CardsSet
