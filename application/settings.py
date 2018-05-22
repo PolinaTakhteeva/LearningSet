@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'jquery',
     'django_ajax',
+    'django_celery_results',
     'learningSet.apps.LearningsetConfig',
 ]
 
@@ -124,6 +125,11 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.profiling.ProfilingPanel',
 ]
 
+
+# CELERY_RESULT_BACKEND = 'db+mysql://polina:Seva3.14@localhost/f'
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'django-cache'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

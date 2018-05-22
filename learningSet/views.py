@@ -14,11 +14,27 @@ from django.views.decorators.http import require_POST
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from celery import shared_task
 
 
+from learningSet.tasks import send_email
+
+def send_email():
+    return send_mail(
+        'Subject here',
+        'Here is the message.',
+        'polinatahteeva@gmail.com',
+        ['polinatahteeva@gmail.com'],
+        fail_silently=False,
+    ) 
 
 def users_list(request):
     users = User.objects.all()[:10]
+
+    print ('st')
+    send_email()
+    # print (send_email.delay())
+    print ('fn')
     return render(    
         request, 'learningSet/users_list.html',
          {'users': users}
@@ -214,14 +230,20 @@ class CardsSetDelete(DeleteView):
     model = CardsSet
     success_url = reverse_lazy('sets_list')
 
+
+
 class CardCreate(AjaxableResponseMixin, CreateView):
     model = Card
-    fields = ['question', 'answer', 'cardsSet']
+    fields = ['question', 'answer']
 
-    # def form_valid(self, form):
-    #     card = form.save(commit=False)
-    #     card.save()
-    #     return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': set.id}))
+    def form_valid(self, form, set_id):
+        # form.cleaned_data['cardsSet'] = 
+        card = form.save(commit=False)
+        # card.cardsSet = CardsSet.objects.get(id=6)
+        card.cardsSet = 6
+        card.save()
+        # return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': set.id}))
+        return HttpResponseRedirect(reverse('set_detail', kwargs={'pk': 6}))
 
 
 @login_required

@@ -35,7 +35,7 @@
 		{% endfor %}
 		<br>	
     {% buttons %}
-      <button id="card_create" type="submit" class="btn btn-primary" onclick="location.href='{% url 'card_add' %}'">
+      <button id="card_create" type="submit" class="btn btn-primary" onclick="location.href='{% url 'card_add' set.id %}'">
           {% bootstrap_icon "plus" %} Добавить вопрос
       </button>
     {% endbuttons %}

@@ -27,7 +27,7 @@ urlpatterns = [
     path('set/<int:pk>/delete/', CardsSetDelete.as_view(), name='set_delete'),
     path('cardsSet_create/', views.cardsSet_create, name='cardsSet_create'),
 
-    path('card/add/', CardCreate.as_view(), name='card_add'),
+    path('card/add/<int:set_id>/', CardCreate.as_view(), name='card_add'),
     path('card/<int:pk>/', CardUpdate.as_view(), name='card_update'),
     path('card/<int:pk>/delete/', CardDelete.as_view(), name='card_delete'),
     path('card_create/', views.card_create, name='card_create'),
