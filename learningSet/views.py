@@ -15,26 +15,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from celery import shared_task
-
-
+from django.core.mail import send_mail
 from learningSet.tasks import send_email
-
-def send_email():
-    return send_mail(
-        'Subject here',
-        'Here is the message.',
-        'polinatahteeva@gmail.com',
-        ['polinatahteeva@gmail.com'],
-        fail_silently=False,
-    ) 
 
 def users_list(request):
     users = User.objects.all()[:10]
-
-    print ('st')
-    send_email()
-    # print (send_email.delay())
-    print ('fn')
+    send_email.delay()
     return render(    
         request, 'learningSet/users_list.html',
          {'users': users}

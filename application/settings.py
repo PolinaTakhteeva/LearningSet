@@ -131,6 +131,17 @@ DEBUG_TOOLBAR_PANELS = [
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_BACKEND = 'django-cache'
 
+
+# Email settings
+EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'polinatahteva@gmail.com'
+EMAIL_HOST_USER = 't-polya@mail.ru'
+EMAIL_HOST_PASSWORD = 'password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 

@@ -8,16 +8,6 @@ def add(x, y):
 
 
 @shared_task
-def mul(x, y):
-    return x * y
-
-
-@shared_task
-def xsum(numbers):
-    return sum(numbers)
-
-
-@shared_task
 def send_email():
 	return send_mail(
     	'Subject here',
