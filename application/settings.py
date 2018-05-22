@@ -116,13 +116,12 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.headers.HeadersPanel',
     'debug_toolbar.panels.request.RequestPanel',
     'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
     'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
     'debug_toolbar.panels.cache.CachePanel',
     'debug_toolbar.panels.signals.SignalsPanel',
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
-    'debug_toolbar.panels.profiling.ProfilingPanel',
 ]
 
 
@@ -134,13 +133,12 @@ CELERY_RESULT_BACKEND = 'django-cache'
 
 # Email settings
 EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'polinatahteva@gmail.com'
-EMAIL_HOST_USER = 't-polya@mail.ru'
-EMAIL_HOST_PASSWORD = 'password'
-EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'polinatahteeva@gmail.com'
+EMAIL_HOST_PASSWORD = 'passward'
+EMAIL_PORT = 587
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -158,6 +156,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+
+INTERNAL_IPS = ['127.0.0.1',]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'

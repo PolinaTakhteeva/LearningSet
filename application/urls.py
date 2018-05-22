@@ -1,6 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from learningSet import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,5 +37,17 @@ urlpatterns = [
     path('like/', views.like, name='like'),
     path('api/users/list/', views.users_list_api, name='users_list_api')
     
-
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         url(r'^__debug__/', include(debug_toolbar.urls)),
+#     ] + urlpatterns
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+    SHOW_TOOLBAR_CALLBACK = True
